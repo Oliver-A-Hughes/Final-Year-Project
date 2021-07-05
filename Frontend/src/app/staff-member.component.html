@@ -1,0 +1,116 @@
+<div *ngIf="!editStaffMember" class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <button class="btn btn-primary"  [routerLink]="['/staffmembers']">Back</button>
+
+            <div *ngFor = "let entry of backendService.employee | async">
+                <div class="card" style="margin-top: 10px;">
+                    <div class="card-header"> 
+                     Staff Member Details
+                    </div>
+                    <div class="card-body"> 
+                        <p class="card-text">First Name:       {{ entry.firstName }} </p>
+                        <p class="card-text">Surname:          {{ entry.surname }} </p>
+                        <p class="card-text">Address:          {{ entry.address }} </p>
+                        <p class="card-text">City:             {{ entry.city }}   </p>  
+                        <p class="card-text">Region:           {{ entry.region }}   </p>  
+                        <p class="card-text">Mobile:           {{ entry.mobile }}   </p>  
+                    </div>
+                    <div class="card-footer" *ngIf="!deleteStaffMember"> 
+                    
+                        <button class="btn btn-primary" style="margin-top: 5px;" 
+                        (click)="editButtonClicked(entry._id, entry.firstName, entry.surname,
+                        entry.address, entry.city, entry.region, entry.mobile)">
+                        Edit
+                        </button>
+
+                        <button class="btn btn-danger" style="margin-top: 5px; margin-left: 5px;" 
+                         (click)="deleteButtonClicked(entry._id)">
+                        Delete
+                        </button>
+                    </div>
+
+                    <div class="card-footer" *ngIf="deleteStaffMember">
+                        <p class="card-text"> Are you sure you want to delete this staff member? </p>
+                     
+                        <button class="btn btn-danger" style="margin-left: 5px;" 
+                        (click)="confirmDeletion(entry._id)">
+                        Delete
+                        </button>
+
+                        <button class="btn btn-primary" style="margin-left: 5px;" (click)="cancelButtonClicked()">
+                            Cancel
+                        </button>
+                    </div> 
+                </div>
+            </div>
+        </div> <!-- col -->
+    </div> <!-- row -->
+</div> <!-- container -->
+
+<div *ngIf="editStaffMember" class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h2>Edit Staff Member</h2>
+
+            <form [formGroup]="staffMemberForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="First Name">First Name</label>
+                    <input type="text" id="firstName" name="firstName"
+                        class="form-control"
+                        formControlName="firstName"
+                        [ngClass]="{'error': isInvalid('firstName')}">
+                </div>
+                <div class="form-group">
+                    <label for="Surname">Surname</label>
+                    <input type="text" id="surname" name="surname"
+                        class="form-control"
+                        formControlName="surname"
+                        [ngClass]="{'error': isInvalid('surname')}">
+                </div>
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="text" id="address" name="address"
+                        class="form-control"
+                        formControlName="address"
+                        [ngClass]="{'error': isInvalid('address')}">
+                </div>
+                <div class="form-group">
+                    <label for="City">City/Town</label>
+                    <input type="text" id="city" name="city"
+                        class="form-control"
+                        formControlName="city" 
+                        [ngClass]="{'error': isInvalid('city')}">
+                </div>
+                <div class="form-group">
+                    <label for="Region">Region</label>
+                    <input type="text" id="region" name="region"
+                        class="form-control"
+                        formControlName="region" 
+                        [ngClass]="{'error': isInvalid('region')}">
+                </div>
+                <div class="form-group">
+                    <label for="Mobile">Mobile Number</label>
+                    <input type="text" id="mobile" name="mobile"
+                        class="form-control"
+                        formControlName="mobile"
+                        [ngClass]="{'error': isInvalid('mobile')}">
+                </div>
+                
+                <span *ngIf="isIncomplete()">
+                    Please complete all fields
+                </span>   
+                <button *ngIf="!isIncomplete()" type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+                <button class="btn btn-primary" style="margin-left: 5px;" (click)="cancelButtonClicked()">
+                Cancel
+                </button>
+    
+            </form>
+
+        </div> <!-- col -->
+    </div> <!-- row -->
+</div> <!-- container -->

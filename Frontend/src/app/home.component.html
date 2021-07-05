@@ -1,0 +1,8 @@
+<div class="container" style="margin-top: 100px;">
+    <ul *ngIf="!authService.loggedIn">
+        <h4>Welcome to E-Cover, Please click the login button in the top right corner.</h4>
+    </ul>
+    <ul *ngIf="authService.userProfile$ | async as user">
+        <h3>Welcome to E-cover {{ user.name }}. Please use the navigation buttons above.</h3>
+    </ul>
+</div>

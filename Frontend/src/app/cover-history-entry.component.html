@@ -1,0 +1,53 @@
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <button class="btn btn-primary"  [routerLink]="['/coverhistory']">Back</button>
+
+            <div *ngFor = "let entry of backendService.coverRequest | async">
+                <div class="card" style="margin-top: 10px;">
+                    <div class="card-header"> 
+                     Cover Request Details
+                    </div>
+                    <div class="card-body"> 
+                        <p class="card-text">Request Creation Date:         {{ entry.creationDate }} </p>
+                        <p class="card-text">Request Status:                {{ entry.status }}   </p>  
+                        <p class="card-text">Date of Shift:                 {{ entry.shiftDate }} </p>
+                        <p class="card-text">Shift Start Time:              {{ entry.startTime }} </p>
+                        <p class="card-text">Shift End Time:                {{ entry.endTime }}   </p>  
+                        <p class="card-text">Store:                         {{ entry.store }}   </p>  
+                        <p class="card-text">Role:                          {{ entry.role }}   </p>
+                        <p class="card-text">Time Filter:                   {{ entry.timeFilter }} minutes   </p>
+                        <p class="card-text">Distance Filter:               {{ entry.distanceFilter }} miles   </p>
+                        <p class="card-text">Number of Request Recipients:  {{ entry.recipients.length}} </p>  
+                    </div>
+                    <div class="card-footer" *ngIf="entry.status == 'Open' && !cancelRequest"   >
+                        <button class="btn btn-danger" style="margin-top: 5px;" 
+                        (click)="cancelRequestButtonClicked()">
+                        Cancel Request
+                       </button>
+
+                    </div>
+                    <div class="card-footer" *ngIf="entry.status == 'Open' && cancelRequest" >
+                        <p class="card-text"> Are you sure you want to cancel this request? </p>
+
+                        <button class="btn btn-primary" style="margin-top: 5px;" 
+                        (click)="abortCancellation()">
+                        Back
+                       </button>
+
+                        <button class="btn btn-danger" style="margin-top: 5px; margin-left: 5px;" 
+                        (click)="confrimCancellation()">
+                        Cancel Request
+                       </button>
+                    </div>
+
+                    <div class="card-footer" *ngIf="entry.status == 'Closed'" >
+                        <p class="card-text">Role has bee filled by: {{entry.assigneeName}}, Contact number: {{entry.assigneeMobile}}</p>
+                    </div> 
+
+                </div>
+            </div>
+        </div> <!-- col -->
+    </div> <!-- row -->
+</div> <!-- container -->

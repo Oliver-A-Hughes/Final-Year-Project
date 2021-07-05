@@ -1,0 +1,35 @@
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-sm-12">
+           
+            <table class="table table-striped" style="margin-top: 10px;">
+                <thead>
+                    <tr>
+                      <th>Creation Date</th>
+                      <th>Shift Date</th>
+                      <th>Store</th>
+                      <th>Role</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let entry of backendService.coverHistory | async">
+                    <td> {{ entry.creationDate}}</td>
+                    <td>{{ entry.shiftDate | date : 'dd-MM-yyyy' }}</td>
+                    <td>{{ entry.store }}</td>
+                    <td>{{ entry.role }}</td>
+                    <td>{{ entry.startTime }}</td>
+                    <td>{{ entry.endTime }}</td>
+                    <td>{{ entry.status }}</td>
+                    <button class="btn btn-primary" style="margin-top: 5px;"
+                    [routerLink]="['/coverhistory', entry._id]">View</button>
+                  </tr>
+                </tbody> 
+              </table>
+
+        </div> <!-- col -->
+    </div> <!-- row -->
+</div> <!-- container -->
